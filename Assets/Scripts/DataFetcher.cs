@@ -133,6 +133,7 @@ public class DataFetcher : MonoBehaviour
     private IEnumerator RequestCloData(Action<CloData> cloDataCallback)
     {
         var webRequest = UnityWebRequest.Get(cloUrl);
+        webRequest.SetRequestHeader("user-agent","okhttp/3.14.9");
         
         yield return webRequest.SendWebRequest();
 
