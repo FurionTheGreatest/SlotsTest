@@ -210,8 +210,13 @@ public class DataFetcher : MonoBehaviour
 #endif
         _appsFlyer.GetConversionData((conversionData) =>
         {
-            if (GetTrackLink() != null) return;            
+            if (GetTrackLink() != null) return;
 
+            if (conversionData == null)
+            {
+                trackLinkCallback(null);
+                return;
+            }
             if (conversionData.ContainsKey("media_source"))
             {
                 if (mediaSources != null)

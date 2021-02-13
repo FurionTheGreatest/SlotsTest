@@ -24,8 +24,6 @@ public class FacebookInit : MonoBehaviour
         {
             // Signal an app activation App Event
             FB.ActivateApp();
-            // Continue with Facebook SDK
-            // ...
         } else {
             Debug.Log("Failed to Initialize the Facebook SDK");
         }
