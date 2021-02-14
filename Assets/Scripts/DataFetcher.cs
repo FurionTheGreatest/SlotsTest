@@ -211,12 +211,13 @@ public class DataFetcher : MonoBehaviour
         _appsFlyer.GetConversionData((conversionData) =>
         {
             if (GetTrackLink() != null) return;
-
+            
             if (conversionData == null)
             {
                 trackLinkCallback(null);
                 return;
             }
+
             if (conversionData.ContainsKey("media_source"))
             {
                 if (mediaSources != null)
@@ -228,57 +229,59 @@ public class DataFetcher : MonoBehaviour
                             string key;
                             if (source.key.split)
                             {
-                                var position = conversionData[source.key.name].ToString().Split(source.key.delimiter.ToCharArray()[0])
-                                    .GetValue(source.key.position);
+                                var position = conversionData.ContainsKey(source.key.name) ? conversionData[source.key.name].ToString()
+                                    .Split(source.key.delimiter.ToCharArray()[0])
+                                    .GetValue(source.key.position) : null;
                                 key = (position ?? "none") as string;
                             }
                             else
                             {
-                                key = (conversionData[source.key.name] == null
-                                    ? "none"
-                                    : conversionData[source.key.name]) as string;
+                                key = conversionData.ContainsKey(source.key.name) ? (string) conversionData[source.key.name] : "none";
+                            }
+
+                            if (string.IsNullOrEmpty(key) || key.Equals("none"))
+                            {
+                                trackLinkCallback(null);
+                                return;
                             }
 
                             string sub1;
                             if (source.sub1.split)
                             {
-                                var position = conversionData[source.sub1.name].ToString().Split(source.sub1.delimiter.ToCharArray()[0])
-                                    .GetValue(source.sub1.position);
+                                var position = conversionData.ContainsKey(source.sub1.name) ? conversionData[source.sub1.name].ToString()
+                                    .Split(source.sub1.delimiter.ToCharArray()[0])
+                                    .GetValue(source.sub1.position):null;
                                 sub1 = (position ?? "none") as string;
                             }
                             else
                             {
-                                sub1 = (conversionData[source.sub1.name] == null
-                                    ? "none"
-                                    : conversionData[source.sub1.name]) as string;
+                                sub1 = conversionData.ContainsKey(source.sub1.name) ? (string) conversionData[source.sub1.name] : "none";
                             }
 
                             string sub2;
                             if (source.sub2.split)
                             {
-                                var position = conversionData[source.sub2.name].ToString().Split(source.sub2.delimiter.ToCharArray()[0])
-                                    .GetValue(source.sub2.position);
+                                var position = conversionData.ContainsKey(source.sub2.name) ? conversionData[source.sub2.name].ToString()
+                                    .Split(source.sub2.delimiter.ToCharArray()[0])
+                                    .GetValue(source.sub2.position):null;
                                 sub2 = (position ?? "none") as string;
                             }
                             else
                             {
-                                sub2 = (conversionData[source.sub2.name] == null
-                                    ? "none"
-                                    : conversionData[source.sub2.name]) as string;
+                                sub2 = conversionData.ContainsKey(source.sub2.name) ? (string) conversionData[source.sub2.name] : "none";
                             }
 
                             string sub3;
                             if (source.sub3.split)
                             {
-                                var position = conversionData[source.sub3.name].ToString().Split(source.sub3.delimiter.ToCharArray()[0])
-                                    .GetValue(source.sub3.position);
+                                var position = conversionData.ContainsKey(source.sub3.name) ? conversionData[source.sub3.name].ToString()
+                                    .Split(source.sub3.delimiter.ToCharArray()[0])
+                                    .GetValue(source.sub3.position):null;
                                 sub3 = (position ?? "none") as string;
                             }
                             else
                             {
-                                sub3 = (conversionData[source.sub3.name] == null
-                                    ? "none"
-                                    : conversionData[source.sub3.name]) as string;
+                                sub3 = conversionData.ContainsKey(source.sub3.name) ? (string) conversionData[source.sub3.name] : "none";
                             }
 
                             var tracklink = new TrackLinkData
